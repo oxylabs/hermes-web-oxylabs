@@ -1,0 +1,12 @@
+name: web-oxylabs
+version: 1.0.0
+description: "Oxylabs AI Studio web search and extraction provider for Hermes Agent. Requires OXYLABS_API_KEY (sign up at https://aistudio.oxylabs.io/api-key)."
+author: Oxylabs
+kind: backend
+provides_web_providers:
+  - oxylabs
+requires_env:
+  - name: OXYLABS_API_KEY
+    description: "Oxylabs AI Studio API key"
+    url: "https://aistudio.oxylabs.io/api-key"
+    secret: true
