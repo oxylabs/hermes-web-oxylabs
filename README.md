@@ -10,21 +10,22 @@ structured, LLM-ready web data instead of raw page noise.
 ## What it does
 
 - **Web search:** returns ranked results with titles, URLs, and descriptions.
-- **Web extraction:** turns webpages into readable markdown or structured
-  content.
-- **Dynamic pages:** supports JavaScript rendering when a page needs more than
-  a simple fetch.
-- **Geo-targeted research:** can search or extract from a specific location
-  when regional results matter.
+- **Web extraction:** turns webpages into readable markdown.
 - **Agent-friendly output:** gives Hermes cleaner material for summaries,
   comparisons, notes, and follow-up reasoning.
+
+The standard Hermes `web_extract` tool currently requests markdown with
+JavaScript rendering disabled and does not expose geo-location controls to the
+agent. The Oxylabs provider accepts output-format, JavaScript-rendering, and
+geo-location options for forward compatibility, but Hermes core does not
+currently make those options model-callable.
 
 ## Good for
 
 - Research agents that need fresh web context.
 - Product, market, and competitive research across public sources.
 - Turning webpages into clean summaries, tables, briefs, or notes.
-- Pages where content is dynamic, noisy, or different by region.
+- Turning noisy public pages into cleaner source material.
 
 ## Install
 

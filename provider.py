@@ -32,13 +32,18 @@ Env vars::
     OXYLABS_API_KEY=...   # https://aistudio.oxylabs.io/api-key
     OXYLABS_API_URL=...   # optional base-URL override (testing)
 
-Forward-compat kwargs honored on ``extract``:
+Forward-compat kwargs accepted by ``extract``:
 
 - ``render_javascript`` (bool)  — JS-render the page before extraction.
 - ``geo_location`` (str)        — geo-target the request (ISO country code).
 - ``format`` (str)              — ``"markdown"`` (default), ``"json"``,
                                   ``"html"`` (mapped to ``markdown`` — AI
                                   Studio does not return raw HTML).
+
+Hermes core's standard ``web_extract`` tool currently calls providers with
+``format="markdown"`` and does not expose ``render_javascript`` or
+``geo_location`` in its model-facing schema. The extra kwargs remain here for
+direct callers and forward compatibility with a future expanded dispatcher.
 
 Post-redirect URL re-check: the API does not expose the final URL after
 redirects, so :func:`tools.website_policy.check_website_access` only runs
@@ -175,12 +180,12 @@ def _scrape_data_to_content(data: Any) -> str:
 
 
 def _normalize_format_kwarg(format_value: Optional[str], default: str = "markdown") -> str:
-    """Map dispatcher ``format`` values to AI Studio ``output_format`` literals.
+    """Map provider ``format`` values to AI Studio ``output_format`` literals.
 
-    Hermes' dispatcher passes ``"markdown"`` / ``"html"``; AI Studio's
-    scraper supports ``"markdown"``, ``"json"``, ``"csv"``, ``"screenshot"``,
-    and ``"toon"``. Map ``"html"`` to ``"markdown"`` and pass through
-    native values as-is.
+    Hermes' current dispatcher passes ``"markdown"``. Direct callers may also
+    pass ``"html"`` or an AI Studio-native value. AI Studio's scraper supports
+    ``"markdown"``, ``"json"``, ``"csv"``, ``"screenshot"``, and ``"toon"``.
+    Map ``"html"`` to ``"markdown"`` and pass through native values as-is.
     """
     if not format_value:
         return default
@@ -328,6 +333,10 @@ class OxylabsWebSearchProvider(WebSearchProvider):
         - ``format``: see :func:`_normalize_format_kwarg`. Default markdown.
         - ``render_javascript``: bool (default False).
         - ``geo_location``: str (ISO country code).
+
+        The standard Hermes tool currently supplies only ``format="markdown"``;
+        the remaining options are available to direct callers and a future
+        dispatcher that exposes them.
         """
         from tools.interrupt import is_interrupted as _is_interrupted
 
@@ -498,8 +507,7 @@ class OxylabsWebSearchProvider(WebSearchProvider):
             "name": "Oxylabs AI Studio",
             "badge": "paid",
             "tag": (
-                "Search + extract backed by Oxylabs' AI Studio. "
-                "Per-call render_javascript and geo_location supported."
+                "Search + markdown extraction backed by Oxylabs' AI Studio."
             ),
             "env_vars": [
                 {
