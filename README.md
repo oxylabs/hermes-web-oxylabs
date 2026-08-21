@@ -1,4 +1,4 @@
-[![Oxylabs promo code](https://github.com/oxylabs/hermes-web-oxylabs/blob/main/Github%20repositories%20banner%20v1%402x.png)](https://oxylabs.io/hermes-web-oxylabs?&utm_content=web_api_waitinglist&groupid=877)
+[![Oxylabs promo code](https://github.com/oxylabs/hermes-web-oxylabs/blob/main/Github%20repositories%20banner%20v1%402x.png)](https://oxylabs.io/web-api-early-access?&utm_content=web_api_waitinglist&groupid=877)
 
 # Hermes Web Oxylabs
 
